@@ -16,17 +16,17 @@ export default function App() {
         <Stack.Screen
           options={{ headerShown: false }}
           name="InitialProfileInfoScreen"
-          component={SignUpScreen}
-        />
-        <Stack.Screen
-          options={{ headerShown: false }}
-          name="SignUp"
-          component={LoginScreen}
+          component={InitialProfileInfoScreen}
         />
         <Stack.Screen
           options={{ headerShown: false }}
           name="Login"
-          component={InitialProfileInfoScreen}
+          component={LoginScreen}
+        />
+        <Stack.Screen
+          options={{ headerShown: false }}
+          name="SignUp"
+          component={SignUpScreen}
         />
         <Stack.Screen
           options={{ headerShown: false }}
