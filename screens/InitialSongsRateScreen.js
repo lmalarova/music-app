@@ -29,7 +29,7 @@ const InitialSongsRateScreen = () => {
         Tell us what you think about these songs!
       </Text>
       <View>
-        <Text>{getRandomSong()}.name</Text>
+        <Text>{getRandomSong()}</Text>
       </View>
     </KeyboardAvoidingView>
   );

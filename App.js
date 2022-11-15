@@ -15,23 +15,29 @@ export default function App() {
       <Stack.Navigator>
         <Stack.Screen
           options={{ headerShown: false }}
-          name="SignUp"
+          name="InitialProfileInfoScreen"
           component={SignUpScreen}
         />
         <Stack.Screen
           options={{ headerShown: false }}
-          name="Login"
+          name="SignUp"
           component={LoginScreen}
         />
         <Stack.Screen
-          name="InitialProfileInfoScreen"
+          options={{ headerShown: false }}
+          name="Login"
           component={InitialProfileInfoScreen}
         />
         <Stack.Screen
+          options={{ headerShown: false }}
           name="InitialSongsRateScreen"
           component={InitialSongsRateScreen}
         />
-        <Stack.Screen name="Home" component={HomeScreen} />
+        <Stack.Screen
+          options={{ headerShown: false }}
+          name="Home"
+          component={HomeScreen}
+        />
       </Stack.Navigator>
     </NavigationContainer>
   );
