@@ -4,7 +4,7 @@ import {
   Text,
   TouchableOpacity,
 } from "react-native";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { styles } from "../styles/styles";
 import DateTimePicker from "@react-native-community/datetimepicker";
 import CountryPicker from "react-native-country-picker-modal";
@@ -13,7 +13,8 @@ import * as firebase from "firebase";
 
 const InitialProfileInfoScreen = ({ navigation }) => {
   const [date_birth, setBirthDate] = useState(new Date());
-  const [country, setCountry] = useState("");
+  const [country, setCountry] = useState(null);
+  const [countryCode, setCountryCode] = useState('SK')
   const [gender, setGender] = useState("");
 
   const onDateChange = (event, selectedDate) => {
@@ -39,8 +40,8 @@ const InitialProfileInfoScreen = ({ navigation }) => {
       <Text style={styles.initialHeader}>
         Tell us something about yourself!
       </Text>
-      <Text>Birth Date</Text>
       <View style={styles.inputContainer}>
+        <Text style={styles.birthDateLabel}>Birth Date</Text>
         <DateTimePicker
           value={date_birth}
           mode="date"
@@ -48,32 +49,35 @@ const InitialProfileInfoScreen = ({ navigation }) => {
           display="default"
           onChange={onDateChange}
           style={{
-            backgroundColor: "white",
+            backgroundColor: "transparent",
             paddingHorizontal: 15,
             paddingVertical: 10,
             borderRadius: 10,
             marginTop: 5,
+            marginBottom: 15,
           }}
         />
         <Text>Country</Text>
         <CountryPicker
+          countryCode={countryCode}
           value={country}
+          withCountryNameButton
           withFilter
           containerButtonStyle={{
-            placeholder: "Select country",
             backgroundColor: "white",
             paddingHorizontal: 15,
             paddingVertical: 10,
             borderRadius: 10,
             marginTop: 5,
+            marginBottom: 15,
           }}
-          visible
           onSelect={(country) => {
-            setCountry(country.name);
+            setCountry(country);
+            setCountryCode(country.cca2);
           }}
         />
         <Text>Gender</Text>
-        <Picker value={gender} onValueChange={(gender) => setGender(gender)}>
+        <Picker value={gender} style={{height: 44,}} itemStyle={{height: 44, backgroundColor: "#FFFFFF"}} selectedValue={gender} onValueChange={(gender) => setGender(gender)}>
           <Picker.Item label="Man" value="m" />
           <Picker.Item label="Female" value="f" />
         </Picker>
