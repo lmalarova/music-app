@@ -75,12 +75,13 @@ export const styles = StyleSheet.create({
     color: "#103d69",
   },
   songContainer: {
-    alignItems: "left",
     width: "70%",
     marginBottom: 20
   },
   songRow: {
-    marginBottom: 20
+    marginBottom: 20,
+    alignItems: 'center',
+    justifyContent: 'center',
   }
 
 });
