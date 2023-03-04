@@ -15,6 +15,11 @@ export default function App() {
       <Stack.Navigator>
         <Stack.Screen
           options={{ headerShown: false }}
+          name="InitialSongsRateScreen"
+          component={InitialSongsRateScreen}
+        />
+        <Stack.Screen
+          options={{ headerShown: false }}
           name="InitialProfileInfoScreen"
           component={InitialProfileInfoScreen}
         />
@@ -27,11 +32,6 @@ export default function App() {
           options={{ headerShown: false }}
           name="SignUp"
           component={SignUpScreen}
-        />
-        <Stack.Screen
-          options={{ headerShown: false }}
-          name="InitialSongsRateScreen"
-          component={InitialSongsRateScreen}
         />
         <Stack.Screen
           options={{ headerShown: false }}
