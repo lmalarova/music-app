@@ -63,6 +63,24 @@ export const styles = StyleSheet.create({
   initialHeader: {
     fontSize: 20,
     padding: 10,
+    marginBottom: 30,
     color: "#103d69",
   },
+  songAuthor: {
+    fontSize: 10,
+    color: "#103d69",
+  },
+  songName: {
+    fontSize: 20,
+    color: "#103d69",
+  },
+  songContainer: {
+    alignItems: "left",
+    width: "70%",
+    marginBottom: 20
+  },
+  songRow: {
+    marginBottom: 20
+  }
+
 });
