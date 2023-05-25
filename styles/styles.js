@@ -1,10 +1,24 @@
 import { StyleSheet } from "react-native";
+import {
+  widthPercentageToDP as wp,
+  heightPercentageToDP as hp,
+} from "react-native-responsive-screen";
 
 export const styles = StyleSheet.create({
   container: {
     flex: 1,
     justifyContent: "center",
     alignItems: "center",
+  },
+  detailContainer: {
+    alignSelf: "center",
+    alignItems: "center",
+    justifyContent: "center",
+    borderWidth: 5,
+    borderStyle: "solid",
+    borderColor: "#103d69",
+    width: "95%",
+    height: "60%",
   },
   inputContainer: {
     width: "80%",
@@ -20,7 +34,7 @@ export const styles = StyleSheet.create({
     width: "60%",
     justifyContent: "center",
     alignItems: "center",
-    marginTop: 40,
+    marginTop: hp("5%"),
   },
   button: {
     backgroundColor: "#103d69",
@@ -62,26 +76,28 @@ export const styles = StyleSheet.create({
   },
   initialHeader: {
     fontSize: 20,
-    padding: 10,
-    marginBottom: 30,
+    // padding: 10,
+    // marginBottom: 30,
     color: "#103d69",
   },
   songAuthor: {
-    fontSize: 10,
+    fontSize: hp("2,5%"),
     color: "#103d69",
   },
   songName: {
-    fontSize: 20,
+    fontSize: hp("3%"),
     color: "#103d69",
   },
   songContainer: {
-    width: "70%",
-    marginBottom: 20
+    width: wp("70%"),
+    // marginBottom: 20,
   },
   songRow: {
-    marginBottom: 20,
-    alignItems: 'center',
-    justifyContent: 'center',
-  }
-
+    borderBottomWidth: 1,
+    borderStyle: "solid",
+    borderBottomColor: "#103d69",
+    paddingTop: 10,
+    alignItems: "center",
+    justifyContent: "center",
+  },
 });

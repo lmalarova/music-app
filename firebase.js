@@ -25,45 +25,45 @@ if (firebase.apps.length === 0) {
 
 const auth = firebase.auth();
 
-export function writeUserData(userId, email) {
-  firebase
-    .database()
-    .ref("users/" + userId)
-    .set({
-      email: email,
-    });
-}
+// export function writeUserData(userId, email) {
+//   firebase
+//     .database()
+//     .ref("users/" + userId)
+//     .set({
+//       email: email,
+//     });
+// }
 
-firebase
-  .database()
-  .ref("users/Jwc4JkXU75Va1XscdT0kPbWvIJc2")
-  .set({
-    email: "test12@gmail.com",
-    nickname: "test",
-    ratedSongs: [
-      {
-        songId: "12345",
-        rating: 4,
-      },
-      {
-        ratedSong: "12346",
-        rating: 1,
-      },
-    ],
-    recommendedSongs: ["12", "123"],
-    nowPlayingSong: "12345",
-  });
+// firebase
+//   .database()
+//   .ref("users/Jwc4JkXU75Va1XscdT0kPbWvIJc2")
+//   .set({
+//     email: "test12@gmail.com",
+//     nickname: "test",
+//     ratedSongs: [
+//       {
+//         songId: "12345",
+//         rating: 4,
+//       },
+//       {
+//         ratedSong: "12346",
+//         rating: 1,
+//       },
+//     ],
+//     recommendedSongs: ["12", "123"],
+//     nowPlayingSong: "12345",
+//   });
 
-firebase.database().ref("songs/12345").set({
-  name: "Lazy Song",
-  author: "Bruno Mars",
-  genre: "Pop",
-});
+// firebase.database().ref("songs/12345").set({
+//   name: "Lazy Song",
+//   author: "Bruno Mars",
+//   genre: "Pop",
+// });
 
-firebase.database().ref("songs/12346").set({
-  name: "My heart will go on",
-  author: "Celine Dion",
-  genre: "Pop",
-});
+// firebase.database().ref("songs/12346").set({
+//   name: "My heart will go on",
+//   author: "Celine Dion",
+//   genre: "Pop",
+// });
 
 export { auth };
