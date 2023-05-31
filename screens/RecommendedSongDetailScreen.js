@@ -10,21 +10,10 @@ import StarRating from "react-native-star-rating-widget";
 import * as firebase from "firebase";
 
 const RecommendedSongDetailScreen = ({ navigation, route }) => {
-  const [songId, setSongId] = useState();
   const [song, setSong] = useState({});
 
   const getSong = async () => {
-    console.log("HALOOOOO DOPICEEE");
-    const songId = route.params["songId"];
-
-    console.log(songId);
-
-    const song = await firebase
-      .database()
-      .ref("/songs/" + (songId - 1))
-      .once("value");
-    console.log(song);
-    setSong(song);
+    setSong(route.params["song"]);
   };
 
   // const getSongs = async () => {
