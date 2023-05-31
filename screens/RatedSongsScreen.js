@@ -6,6 +6,7 @@ import {
   ScrollView,
 } from "react-native";
 import { styles } from "../styles/styles";
+import StarRating from "react-native-star-rating-widget";
 import React, { useState, useEffect } from "react";
 import * as firebase from "firebase";
 import Icon from "react-native-vector-icons/Ionicons";
@@ -13,13 +14,17 @@ import Icon from "react-native-vector-icons/Ionicons";
 const NavigationArrow = ({ onPress }) => {
   return (
     <TouchableOpacity onPress={onPress}>
-      <Icon name="arrow-forward" size={24} color="white" />
+      <Icon name="arrow-back" size={24} color="white" />
     </TouchableOpacity>
   );
 };
 
-const RecommendedSongsScreen = ({ route, navigation }) => {
+const RatedSongsScreen = ({ navigation, route }) => {
   const [songs, setSongs] = useState([]);
+
+  const emptyState = () => {
+    setSongs([]);
+  };
 
   const getSongs = async () => {
     let currentUser = await firebase.auth().currentUser;
@@ -29,31 +34,22 @@ const RecommendedSongsScreen = ({ route, navigation }) => {
       .once("value");
     user = user.val();
 
-    const songIds = user.recommendedSongs;
-    setSongs([]);
     let songsTemp = [];
+    setSongs([]);
 
-    for (let i = 0; i < songIds.length; i++) {
-      const snapshot = await firebase
-        .database()
-        .ref("/songs/" + songIds[i])
-        .once("value");
-      let songTemp = snapshot.val();
-      songTemp.rating = 0;
-      songsTemp.push(songTemp);
+    for (let i = 0; i < user.ratedSongs.length; i++) {
+      songsTemp.push(user.ratedSongs[i]);
     }
     setSongs((arr) => [...arr, ...songsTemp]);
   };
 
-  const handleDetail = async (songId) => {
-    navigation.push("RecommendedSongDetailScreen", {
-      songId: songId,
-      songs: songs,
-    });
+  const handleConfirm = async () => {
+    navigation.push("RecommendedSongsScreen");
+    emptyState();
   };
 
   const handleNavigation = async () => {
-    navigation.push("RatedSongsScreen");
+    navigation.push("RecommendedSongsScreen");
   };
 
   useEffect(() => {
@@ -61,27 +57,23 @@ const RecommendedSongsScreen = ({ route, navigation }) => {
   }, []);
 
   return (
-    <SafeAreaView style={styles.container}>
-      <View style={styles.headerRecommended}>
-        <Text style={styles.headerText}>Ohodnotené pesničky</Text>
+    <SafeAreaView style={styles.container} behavior="padding">
+      <View style={styles.headerRated}>
         <NavigationArrow onPress={handleNavigation} />
+        <Text style={styles.headerText}>Odporúčané pesničky</Text>
       </View>
-      <Text style={styles.initialHeader}>Tvoje odporúčané pesničky!</Text>
       <ScrollView>
+        <Text style={styles.initialHeader}>Tvoje ohodnotené pesničky!</Text>
         <View style={styles.songContainer}>
           {!!songs.length &&
             songs.map((elem, index) => (
-              <TouchableOpacity
-                onPress={() => {
-                  handleDetail(elem.id);
-                }}
-                key={index}
-              >
-                <View style={styles.songRow} key={index}>
-                  <Text style={styles.songAuthor}>{elem.author} </Text>
+              <View style={styles.songRow}>
+                <View style={styles.songInfoContainer}>
+                  <Text style={styles.songAuthor}>{elem.author}</Text>
                   <Text style={styles.songName}>{elem.name}</Text>
                 </View>
-              </TouchableOpacity>
+                <StarRating rating={songs[index].rating} onChange={() => {}} />
+              </View>
             ))}
         </View>
       </ScrollView>
@@ -89,4 +81,4 @@ const RecommendedSongsScreen = ({ route, navigation }) => {
   );
 };
 
-export default RecommendedSongsScreen;
+export default RatedSongsScreen;

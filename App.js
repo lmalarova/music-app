@@ -12,6 +12,7 @@ import RecommendedSongDetailScreen from "./screens/RecommendedSongDetailScreen";
 import LoadingScreen from "./screens/LoadingScreen";
 import * as firebase from "firebase";
 import { recommendSongs } from "./logic/recommendSongs";
+import RatedSongsScreen from "./screens/RatedSongsScreen";
 
 const Stack = createNativeStackNavigator();
 
@@ -39,7 +40,7 @@ const runCode = async () => {
     user.id - 1,
     user.country,
     user.year,
-    20,
+    10,
     ratings,
     false
   );
@@ -84,6 +85,11 @@ export default function App() {
           options={{ headerShown: false }}
           name="RecommendedSongsScreen"
           component={RecommendedSongsScreen}
+        />
+        <Stack.Screen
+          options={{ headerShown: false }}
+          name="RatedSongsScreen"
+          component={RatedSongsScreen}
         />
         <Stack.Screen
           options={{ headerShown: false }}

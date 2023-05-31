@@ -14,17 +14,17 @@ const RecommendedSongDetailScreen = ({ navigation, route }) => {
   const [song, setSong] = useState({});
 
   const getSong = async () => {
-    console.log("HALOOOOO DOPICEEE");
     const songId = route.params["songId"];
 
     console.log(songId);
 
-    const song = await firebase
+    let song = await firebase
       .database()
       .ref("/songs/" + (songId - 1))
       .once("value");
-    console.log(song);
+    song.rating = 3;
     setSong(song);
+    console.log(song);
   };
 
   // const getSongs = async () => {

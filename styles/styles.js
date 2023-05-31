@@ -7,9 +7,35 @@ import {
 export const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
+    justifyContent: "center",
+    alignItems: "center",
     paddingHorizontal: 20,
+    width: "100%",
+  },
+  headerRecommended: {
+    width: "100%",
+    height: "10%",
+    flexDirection: "row",
+    backgroundColor: "#64becc",
+    justifyContent: "flex-end",
+    alignItems: "center",
+    margin: 10,
+    paddingRight: 10,
+  },
+  headerRated: {
+    width: "100%",
+    height: "10%",
+    flexDirection: "row",
+    backgroundColor: "#64becc",
+    justifyContent: "flex-start",
+    alignItems: "center",
+    margin: 10,
+    paddingLeft: 10,
+  },
+  headerText: {
+    fontSize: 14,
+    color: "white",
+    padding: 10,
   },
   detailContainer: {
     alignSelf: "center",
@@ -34,7 +60,7 @@ export const styles = StyleSheet.create({
     marginTop: 5,
   },
   buttonContainer: {
-    alignItems: 'center',
+    alignItems: "center",
   },
   buttonDetailContainer: {
     flexDirection: "row",
@@ -58,9 +84,9 @@ export const styles = StyleSheet.create({
     borderWidth: 2,
   },
   buttonText: {
-    color: 'white',
+    color: "white",
     fontSize: 16,
-    fontWeight: 'bold',
+    fontWeight: "bold",
   },
   buttonOutlineText: {
     color: "#103d69",
@@ -84,38 +110,39 @@ export const styles = StyleSheet.create({
   },
   initialHeader: {
     fontSize: 24,
-    fontWeight: 'bold',
+    fontWeight: "bold",
     marginBottom: 20,
-    textAlign: 'center',
+    marginTop: 20,
+    textAlign: "center",
   },
   songAuthor: {
     fontSize: 16,
-    fontWeight: 'bold',
+    fontWeight: "bold",
   },
   songName: {
     fontSize: 14,
   },
   songContainer: {
     flex: 1,
-    width: '100%',
+    width: "100%",
   },
   songDetailContainer: {
     flex: 1,
-    width: '100%',
+    width: "100%",
     alignItems: "center",
   },
   songRow: {
     paddingVertical: 15,
     borderBottomWidth: 1,
-    borderBottomColor: 'gray',
-    flexDirection: 'row',
-    alignItems: 'center',
+    borderBottomColor: "gray",
+    flexDirection: "row",
+    alignItems: "center",
   },
   songInfoContainer: {
     flex: 1,
-    marginRight: 10,
+    // marginRight: 10,
   },
   starRatingDetail: {
-    marginTop: 20
-  }
+    marginTop: 20,
+  },
 });

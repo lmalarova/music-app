@@ -115,6 +115,7 @@ const InitialSongsRateScreen = ({ navigation, route }) => {
         .ref("users/" + currentUser.uid)
         .update({
           recommendedSongs: recommendedSongs,
+          ratedSongs: songs,
         });
 
       navigation.push("RecommendedSongsScreen");

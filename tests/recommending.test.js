@@ -7,11 +7,11 @@ let ratings;
 
 beforeAll(async () => {
   // Initialize Firebase
-  if (firebase.apps.length === 0) {
-    app = firebase.initializeApp(firebaseConfig);
-  } else {
-    app = firebase.app();
-  }
+  // if (firebase.apps.length === 0) {
+  //   app = firebase.initializeApp(firebaseConfig);
+  // } else {
+  //   app = firebase.app();
+  // }
 
   // create test ratings matrix
   ratings = [
