@@ -37,7 +37,7 @@ const runCode = async () => {
     user.id - 1,
     user.country,
     user.year,
-    10,
+    20,
     ratings,
     false
   );
