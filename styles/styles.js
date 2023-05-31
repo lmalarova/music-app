@@ -7,17 +7,20 @@ import {
 export const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: "center",
-    alignItems: "center",
+    justifyContent: 'center',
+    alignItems: 'center',
+    paddingHorizontal: 20,
   },
   detailContainer: {
     alignSelf: "center",
     alignItems: "center",
     justifyContent: "center",
-    borderWidth: 5,
-    borderStyle: "solid",
+    borderWidth: 2,
     borderColor: "#103d69",
-    width: "95%",
+    borderRadius: 10,
+    padding: 20,
+    backgroundColor: "#fff",
+    width: "90%",
     height: "60%",
   },
   inputContainer: {
@@ -31,16 +34,21 @@ export const styles = StyleSheet.create({
     marginTop: 5,
   },
   buttonContainer: {
-    width: "60%",
-    justifyContent: "center",
-    alignItems: "center",
-    marginTop: hp("5%"),
+    alignItems: 'center',
+  },
+  buttonDetailContainer: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    marginTop: 20,
+    width: "100%",
   },
   button: {
-    backgroundColor: "#103d69",
-    width: "100%",
-    padding: 15,
-    borderRadius: 10,
+    backgroundColor: "#64becc",
+    paddingHorizontal: 20,
+    paddingVertical: 10,
+    borderRadius: 5,
+    width: "45%",
+    justifyContent: "center",
     alignItems: "center",
   },
   buttonOutline: {
@@ -50,9 +58,9 @@ export const styles = StyleSheet.create({
     borderWidth: 2,
   },
   buttonText: {
-    color: "white",
-    fontWeight: "700",
+    color: 'white',
     fontSize: 16,
+    fontWeight: 'bold',
   },
   buttonOutlineText: {
     color: "#103d69",
@@ -75,29 +83,39 @@ export const styles = StyleSheet.create({
     alignItems: "center",
   },
   initialHeader: {
-    fontSize: 20,
-    // padding: 10,
-    // marginBottom: 30,
-    color: "#103d69",
+    fontSize: 24,
+    fontWeight: 'bold',
+    marginBottom: 20,
+    textAlign: 'center',
   },
   songAuthor: {
-    fontSize: hp("2,5%"),
-    color: "#103d69",
+    fontSize: 16,
+    fontWeight: 'bold',
   },
   songName: {
-    fontSize: hp("3%"),
-    color: "#103d69",
+    fontSize: 14,
   },
   songContainer: {
-    width: wp("70%"),
-    // marginBottom: 20,
+    flex: 1,
+    width: '100%',
+  },
+  songDetailContainer: {
+    flex: 1,
+    width: '100%',
+    alignItems: "center",
   },
   songRow: {
+    paddingVertical: 15,
     borderBottomWidth: 1,
-    borderStyle: "solid",
-    borderBottomColor: "#103d69",
-    paddingTop: 10,
-    alignItems: "center",
-    justifyContent: "center",
+    borderBottomColor: 'gray',
+    flexDirection: 'row',
+    alignItems: 'center',
   },
+  songInfoContainer: {
+    flex: 1,
+    marginRight: 10,
+  },
+  starRatingDetail: {
+    marginTop: 20
+  }
 });

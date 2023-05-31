@@ -87,35 +87,29 @@ const SongDetailScreen = ({ navigation, route }) => {
 
   return (
     <KeyboardAvoidingView style={styles.container} behavior="padding">
-      <View style={styles.detailContainer}>
-        <Text style={styles.initialHeader}>{newSong.name}</Text>
-        <View style={styles.songContainer}>
-          <Text style={styles.songAuthor}>{newSong.author}</Text>
-          <Text style={styles.songName}>{newSong.country}</Text>
-          <Text style={styles.songName}>{newSong.year}</Text>
-          <Text style={styles.songName}>{newSong.genre}</Text>
-          <StarRating
-            rating={newSong.rating}
-            onChange={(e) => setRating(newSong, e)}
-          />
-        </View>
-        <View style={styles.buttonContainer}>
-          <TouchableOpacity onPress={handleChangeSong} style={styles.button}>
-            <Text style={styles.buttonText}>Change song</Text>
-          </TouchableOpacity>
-        </View>
+    <View style={styles.detailContainer}>
+      <Text style={styles.initialHeader}>{newSong.name}</Text>
+      <View style={styles.songDetailContainer}>
+        <Text style={styles.songAuthor}>{newSong.author}</Text>
+        <Text style={styles.songInfo}>{newSong.country}</Text>
+        <Text style={styles.songInfo}>{newSong.year}</Text>
+        <Text style={styles.songInfo}>{newSong.genre}</Text>
+        <StarRating
+          style={styles.starRatingDetail}
+          rating={newSong.rating}
+          onChange={(e) => setRating(newSong, e)}
+        />
       </View>
-      <View style={styles.buttonContainer}>
-        <TouchableOpacity onPress={handleConfirm} style={styles.button}>
-          <Text style={styles.buttonText}>Go back</Text>
-        </TouchableOpacity>
-      </View>
-      {/* <NavigationContainer>
-        <Tab.Navigator>
-          <Tab.Screen name="Settings" component={InitialProfileInfoScreen} />
-        </Tab.Navigator>
-      </NavigationContainer> */}
-    </KeyboardAvoidingView>
+    </View>
+    <View style={styles.buttonDetailContainer}>
+      <TouchableOpacity onPress={handleConfirm} style={styles.button}>
+        <Text style={styles.buttonText}>Confirm</Text>
+      </TouchableOpacity>
+      <TouchableOpacity onPress={handleChangeSong} style={styles.button}>
+        <Text style={styles.buttonText}>Change song</Text>
+      </TouchableOpacity>
+    </View>
+  </KeyboardAvoidingView>
   );
 };
 

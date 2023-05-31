@@ -1,8 +1,9 @@
 import {
-  KeyboardAvoidingView,
+  SafeAreaView,
   View,
   Text,
   TouchableOpacity,
+  ScrollView
 } from "react-native";
 import { styles } from "../styles/styles";
 import React, { useState, useEffect } from "react";
@@ -49,7 +50,8 @@ const RecommendedSongsScreen = ({ route, navigation }) => {
   }, []);
 
   return (
-    <KeyboardAvoidingView style={styles.container} behavior="padding">
+    <SafeAreaView style={styles.container}>   
+    <ScrollView>
       <Text style={styles.initialHeader}>
         These are songs recommended for you!
       </Text>
@@ -75,7 +77,8 @@ const RecommendedSongsScreen = ({ route, navigation }) => {
           <Tab.Screen name="Settings" component={SettingsScreen} />
         </Tab.Navigator>
       </NavigationContainer> */}
-    </KeyboardAvoidingView>
+    </ScrollView>
+    </SafeAreaView>
   );
 };
 

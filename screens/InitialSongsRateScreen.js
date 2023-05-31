@@ -1,8 +1,9 @@
 import {
-  KeyboardAvoidingView,
+  SafeAreaView,
   View,
   Text,
   TouchableOpacity,
+  ScrollView
 } from "react-native";
 import { styles } from "../styles/styles";
 import StarRating from "react-native-star-rating-widget";
@@ -107,7 +108,7 @@ const InitialSongsRateScreen = ({ navigation, route }) => {
       user.id - 1,
       user.country,
       user.year,
-      10,
+      20,
       ratings,
       true
     );
@@ -134,10 +135,16 @@ const InitialSongsRateScreen = ({ navigation, route }) => {
   }, []);
 
   return (
-    <KeyboardAvoidingView style={styles.container} behavior="padding">
+    <SafeAreaView style={styles.container} behavior="padding">
+      <ScrollView>
       <Text style={styles.initialHeader}>
         Tell us what you think about these songs!
       </Text>
+      <View style={styles.buttonContainer}>
+        <TouchableOpacity onPress={handleConfirm} style={styles.button}>
+          <Text style={styles.buttonText}>Confirm</Text>
+        </TouchableOpacity>
+      </View>
       <View style={styles.songContainer}>
         {!!songs.length &&
           songs.map((elem, index) => (
@@ -148,27 +155,20 @@ const InitialSongsRateScreen = ({ navigation, route }) => {
               key={index}
             >
               <View style={styles.songRow}>
-                <Text style={styles.songAuthor}>{elem.author}</Text>
-                <Text style={styles.songName}>{elem.name}</Text>
-                <View>
-                  <StarRating
-                    rating={songs[index].rating}
-                    onChange={(e) => setRating(elem.id, e)}
-                  />
+                <View style={styles.songInfoContainer}>
+                  <Text style={styles.songAuthor}>{elem.author}</Text>
+                  <Text style={styles.songName}>{elem.name}</Text>
                 </View>
+                <StarRating
+                  rating={songs[index].rating}
+                  onChange={(e) => setRating(elem.id, e)}
+                />
               </View>
             </TouchableOpacity>
           ))}
       </View>
-      <View style={styles.buttonContainer}>
-        <TouchableOpacity
-          onPress={handleConfirm}
-          style={[styles.button, styles.button]}
-        >
-          <Text style={styles.buttonText}>Confirm</Text>
-        </TouchableOpacity>
-      </View>
-    </KeyboardAvoidingView>
+      </ScrollView>
+    </SafeAreaView>
   );
 };
 
