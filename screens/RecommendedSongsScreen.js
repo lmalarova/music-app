@@ -40,7 +40,8 @@ const RecommendedSongsScreen = ({ route, navigation }) => {
 
   const handleDetail = async (song) => {
     navigation.push("RecommendedSongDetailScreen", {
-      song: song
+      song: song,
+      songs: songs
     });
   };
 

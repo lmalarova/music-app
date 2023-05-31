@@ -11,6 +11,7 @@ import * as firebase from "firebase";
 
 const RecommendedSongDetailScreen = ({ navigation, route }) => {
   const [song, setSong] = useState({});
+  const [songs, setSongs] = useState([]);
 
   const getSong = async () => {
     setSong(route.params["song"]);
@@ -56,10 +57,12 @@ const RecommendedSongDetailScreen = ({ navigation, route }) => {
 
     // get his recommended songs
     const songIds = user.recommendedSongs;
+    console.log("BEFORE DELETION");
+    console.log(songIds);
 
     if (song.rating != 0) {
       for (let i = 0; i < songIds.length; i++) {
-        if (songIds[i].id == song.id) {
+        if (songIds[i] == song.id - 1) {
           songIds.splice(i, 1);
 
           // update song rating in ratings matrix
@@ -69,17 +72,25 @@ const RecommendedSongDetailScreen = ({ navigation, route }) => {
             .update({
               [song.id]: song.rating,
             });
+
+          // update recommended songs of user
+          firebase
+          .database()
+          .ref("users/" + currentUser.uid)
+          .update({
+            recommendedSongs: songIds,
+          });
         }
       }
     }
-    // update recommended songs of user
-    firebase
-      .database()
-      .ref("users/" + currentUser.uid)
-      .update({
-        recommendedSongs: songIds,
-      });
 
+    console.log("AFTER DELETION");
+    console.log(songIds);
+
+    navigation.push("RecommendedSongsScreen");
+  };
+
+  const handleBack = async () => {
     navigation.push("RecommendedSongsScreen");
   };
 
@@ -109,8 +120,11 @@ const RecommendedSongDetailScreen = ({ navigation, route }) => {
         </View>
       </View>
       <View style={styles.buttonDetailContainer}>
-        <TouchableOpacity onPress={handleConfirm} style={styles.button}>
+        <TouchableOpacity onPress={handleBack} style={styles.button}>
           <Text style={styles.buttonText}>Go Back</Text>
+        </TouchableOpacity>
+        <TouchableOpacity onPress={handleConfirm} style={styles.button}>
+          <Text style={styles.buttonText}>Confirm</Text>
         </TouchableOpacity>
       </View>
     </KeyboardAvoidingView>
