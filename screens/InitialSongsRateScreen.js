@@ -87,7 +87,7 @@ const InitialSongsRateScreen = ({ navigation, route }) => {
           .database()
           .ref("ratings/" + (user.id - 1))
           .update({
-            [song.id]: song.rating,
+            [song.id - 1]: song.rating,
           })
       );
 

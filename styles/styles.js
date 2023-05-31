@@ -145,4 +145,7 @@ export const styles = StyleSheet.create({
   starRatingDetail: {
     marginTop: 20,
   },
+  recommendedSongsContainer: {
+    width: "80%",
+  },
 });

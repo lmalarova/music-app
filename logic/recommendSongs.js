@@ -17,8 +17,6 @@ export async function recommendSongs(
     let otherUserId = i;
     let otherUser;
 
-    // console.log(otherUserId);
-
     if (otherUserId !== userId) {
       let similarity;
 

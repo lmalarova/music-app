@@ -20,8 +20,17 @@ const NavigationArrow = ({ onPress }) => {
 
 const RecommendedSongsScreen = ({ route, navigation }) => {
   const [songs, setSongs] = useState([]);
+  const [counter, setCounter] = useState(0);
 
   const getSongs = async () => {
+    if (route.params) {
+      setCounter(route.params["counterValue"]);
+    } else {
+      setCounter(0);
+    }
+    console.log("RECOMMENDED");
+    console.log(counter);
+
     let currentUser = await firebase.auth().currentUser;
     user = await firebase
       .database()
@@ -48,7 +57,7 @@ const RecommendedSongsScreen = ({ route, navigation }) => {
   const handleDetail = async (song) => {
     navigation.push("RecommendedSongDetailScreen", {
       song: song,
-      songs: songs
+      counterValue: counter,
     });
   };
 
@@ -78,7 +87,7 @@ const RecommendedSongsScreen = ({ route, navigation }) => {
                 key={index}
               >
                 <View style={styles.songRow} key={index}>
-                  <Text style={styles.songAuthor}>{elem.author} </Text>
+                  <Text style={styles.songAuthor}>{elem.author} - </Text>
                   <Text style={styles.songName}>{elem.name}</Text>
                 </View>
               </TouchableOpacity>

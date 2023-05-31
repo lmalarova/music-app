@@ -66,13 +66,13 @@ const RatedSongsScreen = ({ navigation, route }) => {
         <Text style={styles.initialHeader}>Tvoje ohodnotené pesničky!</Text>
         <View style={styles.songContainer}>
           {!!songs.length &&
-            songs.map((elem, index) => (
-              <View style={styles.songRow}>
+            songs.map((elem) => (
+              <View style={styles.songRow} key={elem.id}>
                 <View style={styles.songInfoContainer}>
                   <Text style={styles.songAuthor}>{elem.author}</Text>
                   <Text style={styles.songName}>{elem.name}</Text>
                 </View>
-                <StarRating rating={songs[index].rating} onChange={() => {}} />
+                <StarRating rating={elem.rating} onChange={() => {}} />
               </View>
             ))}
         </View>

@@ -8,39 +8,64 @@ import { styles } from "../styles/styles";
 import React, { useState, useEffect } from "react";
 import StarRating from "react-native-star-rating-widget";
 import * as firebase from "firebase";
+import { recommendSongs } from "../logic/recommendSongs";
 
 const RecommendedSongDetailScreen = ({ navigation, route }) => {
   const [song, setSong] = useState({});
-  const [songs, setSongs] = useState([]);
+  const [counter, setCounter] = useState(0);
 
   const getSong = async () => {
     setSong(route.params["song"]);
+    setCounter(route.params["counterValue"]);
+    console.log("DETAIL");
+    console.log(counter);
+    if (route.params["counterValue"] == undefined) {
+      setCounter(0);
+    }
   };
 
-  // const getSongs = async () => {
-  //   let currentUser = await firebase.auth().currentUser;
-  //   user = await firebase
-  //     .database()
-  //     .ref("users/" + currentUser.uid)
-  //     .once("value");
-  //   user = user.val();
+  const runCode = async () => {
+    console.log("startcode at " + new Date());
+    // Put your code that you want to run every hour here
+    let currentUser = await firebase.auth().currentUser;
+    let user;
+    user = await firebase
+      .database()
+      .ref("users/" + currentUser.uid)
+      .once("value");
+    user = user.val();
 
-  //   const songIds = user.recommendedSongs;
-  //   let songsTemp = [];
+    let userRatings = await firebase
+      .database()
+      .ref("ratings/" + (user.id - 1))
+      .once("value");
+    userRatings = userRatings.val();
 
-  //   for (let i = 0; i < songIds.length; i++) {
-  //     const snapshot = await firebase
-  //       .database()
-  //       .ref("/songs/" + songIds[i])
-  //       .once("value");
-  //     let songTemp = snapshot.val();
-  //     songTemp.rating = 0;
-  //     songsTemp.push(songTemp);
-  //   }
-  // };
+    let ratings = await firebase.database().ref("ratings/").once("value");
+    ratings = ratings.val();
+
+    const recommendedSongs = await recommendSongs(
+      user.id - 1,
+      user.country,
+      user.year,
+      10,
+      ratings,
+      false
+    );
+
+    console.log(recommendedSongs);
+
+    await firebase
+      .database()
+      .ref("users/" + currentUser.uid)
+      .update({
+        recommendedSongs: recommendedSongs,
+      });
+    console.log("Code executed" + new Date());
+    setCounter(0);
+  };
 
   const setRating = async (songTemp, rating) => {
-    console.log("RATING");
     setSong(() => {
       return { ...songTemp, rating: rating };
     });
@@ -63,22 +88,29 @@ const RecommendedSongDetailScreen = ({ navigation, route }) => {
     if (song.rating != 0) {
       for (let i = 0; i < songIds.length; i++) {
         if (songIds[i] == song.id - 1) {
+          console.log("BEFOR");
+          console.log(counter);
+          setCounter((prevCounter) => prevCounter + 1);
           songIds.splice(i, 1);
+          console.log("AFTER");
+          console.log(counter);
 
           // update song rating in ratings matrix
           firebase
             .database()
             .ref("ratings/" + (user.id - 1))
             .update({
-              [song.id]: song.rating,
+              [song.id - 1]: song.rating,
             });
 
-          // update recommended songs of user
+          const newRatedSongs = [...user.ratedSongs, song];
+          // update recommended and rated songs of user
           firebase
             .database()
             .ref("users/" + currentUser.uid)
             .update({
               recommendedSongs: songIds,
+              ratedSongs: newRatedSongs,
             });
         }
       }
@@ -87,20 +119,20 @@ const RecommendedSongDetailScreen = ({ navigation, route }) => {
     console.log("AFTER DELETION");
     console.log(songIds);
 
-    navigation.push("RecommendedSongsScreen");
+    navigation.push("RecommendedSongsScreen", {
+      counterValue: counter,
+    });
   };
 
   const handleBack = async () => {
-    navigation.push("RecommendedSongsScreen");
+    navigation.push("RecommendedSongsScreen", {
+      counterValue: counter,
+    });
   };
-
-  // const handleGoBack = () => {
-  //   navigation.push(RecommendedSongsScreen);
-  // };
 
   useEffect(() => {
     getSong();
-    // getSongs();
+    if (counter >= 3) runCode();
   }, []);
 
   return (
