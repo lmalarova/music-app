@@ -56,6 +56,9 @@ export async function recommendSongs(
       similarities[otherUserId] = similarity;
     }
   }
+  if (Object.values(similarities).every((x) => x === 0) && ratings[userId]) {
+    return [];
+  }
 
   // Sort the similarities in descending order
   let sortedSimilarities = Object.entries(similarities).sort(
@@ -77,12 +80,12 @@ export async function recommendSongs(
     let otherUserId = sortedSimilarities[i][0];
     let similarity = sortedSimilarities[i][1];
 
-    // console.log(Object.keys(recommendations).length);
-    // console.log(otherUserId);
-
     // Get the songs rated by the other user that the target user has not rated
     let otherUserRatings = ratings[otherUserId];
     let targetUserRatings = ratings[userId];
+    if (!targetUserRatings) {
+      throw new Error("Bad request");
+    }
     // console.log(otherUserRatings);
     let unratedSongs = [];
     for (let i = 0; i < targetUserRatings.length; i++) {
@@ -118,7 +121,7 @@ export async function recommendSongs(
 }
 
 // compute similarity using Pearson correlation coefficient
-function computeSimilarity(
+export function computeSimilarity(
   userId1,
   userCountry,
   userYear,
@@ -151,7 +154,7 @@ function computeSimilarity(
   } else {
     // Calculate the age difference between users
     const ageDifference = Math.abs(
-      new Date(userYear) - new Date(otherUserYear)
+      new Date(userYear).getFullYear() - new Date(otherUserYear).getFullYear()
     );
     // Compute the similarity between the two users
     similarity =

@@ -4,7 +4,7 @@ import * as firebase from "firebase";
 // https://firebase.google.com/docs/web/setup#available-libraries
 
 // Your web app's Firebase configuration
-const firebaseConfig = {
+export const firebaseConfig = {
   apiKey: "AIzaSyBF2qvacPTPTww6fUjqfJ-E2cJNnSvOPZw",
   authDomain: "bachelor-thesis-app-12cc5.firebaseapp.com",
   databaseURL:
