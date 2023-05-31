@@ -45,10 +45,10 @@ const RecommendedSongsScreen = ({ route, navigation }) => {
     setSongs((arr) => [...arr, ...songsTemp]);
   };
 
-  const handleDetail = async (songId) => {
+  const handleDetail = async (song) => {
     navigation.push("RecommendedSongDetailScreen", {
-      songId: songId,
-      songs: songs,
+      song: song,
+      songs: songs
     });
   };
 
@@ -73,7 +73,7 @@ const RecommendedSongsScreen = ({ route, navigation }) => {
             songs.map((elem, index) => (
               <TouchableOpacity
                 onPress={() => {
-                  handleDetail(elem.id);
+                  handleDetail(elem);
                 }}
                 key={index}
               >
