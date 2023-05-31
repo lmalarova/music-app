@@ -8,6 +8,8 @@ import InitialProfileInfoScreen from "./screens/InitialProfileInfoScreen";
 import InitialSongsRateScreen from "./screens/InitialSongsRateScreen";
 import RecommendedSongsScreen from "./screens/RecommendedSongsScreen";
 import SongDetailScreen from "./screens/SongDetailScreen";
+import RecommendedSongDetailScreen from "./screens/RecommendedSongDetailScreen";
+import LoadingScreen from "./screens/LoadingScreen";
 import * as firebase from "firebase";
 import { recommendSongs } from "./logic/recommendSongs";
 
@@ -58,7 +60,7 @@ export default function App() {
 
   interval = setInterval(() => {
     runCode();
-  }, 180000); // 180000 milliseconds = 3 minutes
+  }, 900000); // 900000 milliseconds = 15 minutes
 
   return (
     <NavigationContainer>
@@ -90,6 +92,11 @@ export default function App() {
         />
         <Stack.Screen
           options={{ headerShown: false }}
+          name="RecommendedSongDetailScreen"
+          component={RecommendedSongDetailScreen}
+        />
+        <Stack.Screen
+          options={{ headerShown: false }}
           name="Login"
           component={LoginScreen}
         />
@@ -97,6 +104,11 @@ export default function App() {
           options={{ headerShown: false }}
           name="Home"
           component={HomeScreen}
+        />
+        <Stack.Screen
+          options={{ headerShown: false }}
+          name="LoadingScreen"
+          component={LoadingScreen}
         />
       </Stack.Navigator>
     </NavigationContainer>

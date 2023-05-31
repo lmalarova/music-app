@@ -3,7 +3,7 @@ import {
   View,
   Text,
   TouchableOpacity,
-  ScrollView
+  ScrollView,
 } from "react-native";
 import { styles } from "../styles/styles";
 import StarRating from "react-native-star-rating-widget";
@@ -66,64 +66,63 @@ const InitialSongsRateScreen = ({ navigation, route }) => {
 
   const handleConfirm = async () => {
     console.log("RECOMMENDING");
-    let currentUser = await firebase.auth().currentUser;
-    user = await firebase
-      .database()
-      .ref("users/" + currentUser.uid)
-      .once("value");
-    user = user.val();
+    navigation.push("LoadingScreen");
 
-    let userRatings = await firebase
-      .database()
-      .ref("ratings/" + (user.id - 1))
-      .once("value");
-    userRatings = userRatings.val();
+    try {
+      const currentUser = firebase.auth().currentUser;
+      const userSnapshot = await firebase
+        .database()
+        .ref("users/" + currentUser.uid)
+        .once("value");
+      const user = userSnapshot.val();
 
-    songs.map(async (song) => {
-      await firebase
+      const userRatingsSnapshot = await firebase
         .database()
         .ref("ratings/" + (user.id - 1))
+        .once("value");
+      const userRatings = userRatingsSnapshot.val();
+
+      const updateRatingsPromises = songs.map((song) =>
+        firebase
+          .database()
+          .ref("ratings/" + (user.id - 1))
+          .update({
+            [song.id]: song.rating,
+          })
+      );
+
+      await Promise.all(updateRatingsPromises);
+
+      const ratingsSnapshot = await firebase
+        .database()
+        .ref("ratings/")
+        .once("value");
+      const ratings = ratingsSnapshot.val();
+
+      const recommendedSongs = await recommendSongs(
+        user.id - 1,
+        user.country,
+        user.year,
+        10,
+        ratings,
+        true
+      );
+
+      console.log(recommendedSongs);
+
+      await firebase
+        .database()
+        .ref("users/" + currentUser.uid)
         .update({
-          [song.id]: song.rating,
+          recommendedSongs: recommendedSongs,
         });
-    });
 
-    let ratings = await firebase.database().ref("ratings/").once("value");
-    ratings = ratings.val();
-
-    // const ratings = [
-    //   [0, 0, 3, 0, 1, 5, 0, 1.5, 0, 0.5],
-    //   [2, 0, 0, 2, 1, 5, 3, 1.5, 0, 0],
-    //   [0, 1, 0, 0, 0, 0, 0, 0, 0, 0],
-    //   [0, 4, 0, 0, 1, 5, 0, 1.5, 0, 0],
-    //   [4, 0, 3, 0, 1, 5, 0, 0, 0, 2],
-    //   [0, 0, 1.5, 0, 1, 0, 0, 1.5, 4, 0],
-    //   [2.5, 0, 2, 0, 1, 5, 3, 0.5, 0, 0],
-    //   [0, 1, 0, 4, 1, 3, 2, 1.5, 0, 1],
-    //   [0.5, 0, 3, 0, 1, 2, 0, 1.5, 0, 0],
-    //   [0, 0, 3, 0, 0, 5, 1, 1.5, 0, 0],
-    // ];
-
-    const recommendedSongs = await recommendSongs(
-      user.id - 1,
-      user.country,
-      user.year,
-      20,
-      ratings,
-      true
-    );
-
-    console.log(recommendedSongs);
-
-    await firebase
-      .database()
-      .ref("users/" + currentUser.uid)
-      .update({
-        recommendedSongs: recommendedSongs,
-      });
-
-    navigation.push("RecommendedSongsScreen");
-    emptyState();
+      navigation.push("RecommendedSongsScreen");
+      emptyState();
+    } catch (error) {
+      console.log(error);
+      // Handle error
+    }
   };
 
   useEffect(() => {
@@ -137,36 +136,36 @@ const InitialSongsRateScreen = ({ navigation, route }) => {
   return (
     <SafeAreaView style={styles.container} behavior="padding">
       <ScrollView>
-      <Text style={styles.initialHeader}>
-        Tell us what you think about these songs!
-      </Text>
-      <View style={styles.buttonContainer}>
-        <TouchableOpacity onPress={handleConfirm} style={styles.button}>
-          <Text style={styles.buttonText}>Confirm</Text>
-        </TouchableOpacity>
-      </View>
-      <View style={styles.songContainer}>
-        {!!songs.length &&
-          songs.map((elem, index) => (
-            <TouchableOpacity
-              onPress={() => {
-                handleDetail(elem.id);
-              }}
-              key={index}
-            >
-              <View style={styles.songRow}>
-                <View style={styles.songInfoContainer}>
-                  <Text style={styles.songAuthor}>{elem.author}</Text>
-                  <Text style={styles.songName}>{elem.name}</Text>
+        <Text style={styles.initialHeader}>
+          Tell us what you think about these songs!
+        </Text>
+        <View style={styles.buttonContainer}>
+          <TouchableOpacity onPress={handleConfirm} style={styles.button}>
+            <Text style={styles.buttonText}>Confirm</Text>
+          </TouchableOpacity>
+        </View>
+        <View style={styles.songContainer}>
+          {!!songs.length &&
+            songs.map((elem, index) => (
+              <TouchableOpacity
+                onPress={() => {
+                  handleDetail(elem.id);
+                }}
+                key={index}
+              >
+                <View style={styles.songRow}>
+                  <View style={styles.songInfoContainer}>
+                    <Text style={styles.songAuthor}>{elem.author}</Text>
+                    <Text style={styles.songName}>{elem.name}</Text>
+                  </View>
+                  <StarRating
+                    rating={songs[index].rating}
+                    onChange={(e) => setRating(elem.id, e)}
+                  />
                 </View>
-                <StarRating
-                  rating={songs[index].rating}
-                  onChange={(e) => setRating(elem.id, e)}
-                />
-              </View>
-            </TouchableOpacity>
-          ))}
-      </View>
+              </TouchableOpacity>
+            ))}
+        </View>
       </ScrollView>
     </SafeAreaView>
   );

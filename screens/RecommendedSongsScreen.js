@@ -3,7 +3,7 @@ import {
   View,
   Text,
   TouchableOpacity,
-  ScrollView
+  ScrollView,
 } from "react-native";
 import { styles } from "../styles/styles";
 import React, { useState, useEffect } from "react";
@@ -39,7 +39,7 @@ const RecommendedSongsScreen = ({ route, navigation }) => {
   };
 
   const handleDetail = async (songId) => {
-    navigation.push("SongDetailScreen", {
+    navigation.push("RecommendedSongDetailScreen", {
       songId: songId,
       songs: songs,
     });
@@ -50,34 +50,34 @@ const RecommendedSongsScreen = ({ route, navigation }) => {
   }, []);
 
   return (
-    <SafeAreaView style={styles.container}>   
-    <ScrollView>
-      <Text style={styles.initialHeader}>
-        These are songs recommended for you!
-      </Text>
-      <View style={styles.songContainer}>
-        {!!songs.length &&
-          songs.map((elem, index) => (
-            <TouchableOpacity
-              onPress={() => {
-                handleDetail(elem.id);
-              }}
-              key={index}
-            >
-              <View style={styles.songRow} key={index}>
-                <Text style={styles.songAuthor}>{elem.author}</Text>
-                <Text style={styles.songName}>{elem.name}</Text>
-              </View>
-            </TouchableOpacity>
-          ))}
-      </View>
-      {/* <NavigationContainer>
+    <SafeAreaView style={styles.container}>
+      <ScrollView>
+        <Text style={styles.initialHeader}>
+          These are songs recommended for you!
+        </Text>
+        <View style={styles.songContainer}>
+          {!!songs.length &&
+            songs.map((elem, index) => (
+              <TouchableOpacity
+                onPress={() => {
+                  handleDetail(elem.id);
+                }}
+                key={index}
+              >
+                <View style={styles.songRow} key={index}>
+                  <Text style={styles.songAuthor}>{elem.author} </Text>
+                  <Text style={styles.songName}>{elem.name}</Text>
+                </View>
+              </TouchableOpacity>
+            ))}
+        </View>
+        {/* <NavigationContainer>
         <Tab.Navigator>
           <Tab.Screen name="Home" component={HomeScreen} />
           <Tab.Screen name="Settings" component={SettingsScreen} />
         </Tab.Navigator>
       </NavigationContainer> */}
-    </ScrollView>
+      </ScrollView>
     </SafeAreaView>
   );
 };
