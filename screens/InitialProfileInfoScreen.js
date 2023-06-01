@@ -8,14 +8,12 @@ import React, { useState, useEffect } from "react";
 import { styles } from "../styles/styles";
 import DateTimePicker from "@react-native-community/datetimepicker";
 import CountryPicker from "react-native-country-picker-modal";
-import { Picker } from "@react-native-picker/picker";
 import * as firebase from "firebase";
 
 const InitialProfileInfoScreen = ({ navigation }) => {
   const [date_birth, setBirthDate] = useState(new Date());
   const [country, setCountry] = useState("Slovakia");
   const [countryCode, setCountryCode] = useState("SK");
-  const [gender, setGender] = useState("m");
 
   const onDateChange = (event, selectedDate) => {
     const currentDate = selectedDate || date;
@@ -50,7 +48,6 @@ const InitialProfileInfoScreen = ({ navigation }) => {
         .update({
           date_birth: date_birth,
           country: country,
-          gender: gender,
           id: maxId + 1,
         });
       console.log(currentUser.uid);
@@ -60,11 +57,9 @@ const InitialProfileInfoScreen = ({ navigation }) => {
 
   return (
     <KeyboardAvoidingView style={styles.initialContainer} behavior="padding">
-      <Text style={styles.initialHeader}>
-        Tell us something about yourself!
-      </Text>
+      <Text style={styles.initialHeader}>Povedz nám niečo o sebe!</Text>
       <View style={styles.inputContainer}>
-        <Text style={styles.birthDateLabel}>Birth Date</Text>
+        <Text style={styles.birthDateLabel}>Dátum narodenia</Text>
         <DateTimePicker
           value={date_birth}
           mode="date"
@@ -80,7 +75,7 @@ const InitialProfileInfoScreen = ({ navigation }) => {
             marginBottom: 15,
           }}
         />
-        <Text>Country</Text>
+        <Text>Krajina</Text>
         <CountryPicker
           countryCode={countryCode}
           value={country}
@@ -99,17 +94,6 @@ const InitialProfileInfoScreen = ({ navigation }) => {
             setCountryCode(country.cca2);
           }}
         />
-        <Text>Gender</Text>
-        <Picker
-          value={gender}
-          style={{ height: 44 }}
-          itemStyle={{ height: 44, backgroundColor: "#FFFFFF" }}
-          selectedValue={gender}
-          onValueChange={(gender) => setGender(gender)}
-        >
-          <Picker.Item label="Man" value="m" />
-          <Picker.Item label="Female" value="f" />
-        </Picker>
       </View>
 
       <View style={styles.buttonContainer}>
@@ -117,7 +101,7 @@ const InitialProfileInfoScreen = ({ navigation }) => {
           onPress={handleConfirm}
           style={[styles.button, styles.button]}
         >
-          <Text style={styles.buttonText}>Confirm</Text>
+          <Text style={styles.buttonText}>Potvrdiť</Text>
         </TouchableOpacity>
       </View>
     </KeyboardAvoidingView>

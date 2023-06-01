@@ -1,15 +1,12 @@
 import {
   KeyboardAvoidingView,
-  StyleSheet,
   Text,
   TextInput,
   TouchableOpacity,
   View,
 } from "react-native";
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { auth } from "../firebase";
-import { writeUserData } from "../firebase";
-import { useNavigation } from "@react-navigation/core";
 import { styles } from "../styles/styles";
 import * as firebase from "firebase";
 
@@ -45,9 +42,10 @@ const SignUpScreen = ({ navigation }) => {
 
   return (
     <KeyboardAvoidingView style={styles.container} behavior="padding">
+      <Text style={styles.title}>Music-App</Text>
       <View style={styles.inputContainer}>
         <TextInput
-          placeholder="Nickname"
+          placeholder="Login"
           value={nickname}
           onChangeText={(text) => setNickname(text)}
           style={styles.input}
@@ -59,7 +57,7 @@ const SignUpScreen = ({ navigation }) => {
           style={styles.input}
         />
         <TextInput
-          placeholder="Password"
+          placeholder="Heslo"
           value={password}
           onChangeText={(text) => setPassword(text)}
           style={styles.input}
@@ -72,11 +70,11 @@ const SignUpScreen = ({ navigation }) => {
           onPress={handleSignUp}
           style={[styles.button, styles.button]}
         >
-          <Text style={styles.buttonText}>Register</Text>
+          <Text style={styles.buttonText}>Registrovať</Text>
         </TouchableOpacity>
-        <Text style={styles.text}>Already have an account?</Text>
+        <Text style={styles.text}>Máte už konto?</Text>
         <TouchableOpacity onPress={() => navigation.navigate("Login")}>
-          <Text style={styles.linkText}>Login</Text>
+          <Text style={styles.linkText}>Prihlásiť sa</Text>
         </TouchableOpacity>
       </View>
     </KeyboardAvoidingView>

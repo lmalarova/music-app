@@ -12,6 +12,11 @@ export const styles = StyleSheet.create({
     paddingHorizontal: 20,
     width: "100%",
   },
+  title: {
+    fontSize: 30,
+    fontWeight: "bold",
+    marginBottom: 30,
+  },
   headerRecommended: {
     width: "100%",
     height: "10%",
@@ -64,16 +69,17 @@ export const styles = StyleSheet.create({
   },
   buttonDetailContainer: {
     flexDirection: "row",
-    justifyContent: "space-between",
+    justifyContent: "center",
     marginTop: 20,
     width: "100%",
   },
   button: {
+    marginTop: 20,
     backgroundColor: "#64becc",
     paddingHorizontal: 20,
     paddingVertical: 10,
     borderRadius: 5,
-    width: "45%",
+    width: "55%",
     justifyContent: "center",
     alignItems: "center",
   },

@@ -20,17 +20,8 @@ const NavigationArrow = ({ onPress }) => {
 
 const RecommendedSongsScreen = ({ route, navigation }) => {
   const [songs, setSongs] = useState([]);
-  const [counter, setCounter] = useState(0);
 
   const getSongs = async () => {
-    if (route.params) {
-      setCounter(route.params["counterValue"]);
-    } else {
-      setCounter(0);
-    }
-    console.log("RECOMMENDED");
-    console.log(counter);
-
     let currentUser = await firebase.auth().currentUser;
     user = await firebase
       .database()
@@ -57,7 +48,6 @@ const RecommendedSongsScreen = ({ route, navigation }) => {
   const handleDetail = async (song) => {
     navigation.push("RecommendedSongDetailScreen", {
       song: song,
-      counterValue: counter,
     });
   };
 
@@ -72,7 +62,9 @@ const RecommendedSongsScreen = ({ route, navigation }) => {
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.headerRecommended}>
-        <Text style={styles.headerText}>Ohodnotené pesničky</Text>
+        <TouchableOpacity onPress={handleNavigation}>
+          <Text style={styles.headerText}>Ohodnotené pesničky</Text>
+        </TouchableOpacity>
         <NavigationArrow onPress={handleNavigation} />
       </View>
       <Text style={styles.initialHeader}>Tvoje odporúčané pesničky!</Text>

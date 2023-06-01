@@ -3,15 +3,11 @@ import {
   View,
   Text,
   TouchableOpacity,
-  NavigationContainer,
 } from "react-native";
 import { styles } from "../styles/styles";
 import React, { useState, useEffect } from "react";
 import StarRating from "react-native-star-rating-widget";
 import * as firebase from "firebase";
-import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
-// import RecommendedSongsScreen from "./RecommendedSongsScreen";
-import InitialProfileInfoScreen from "./InitialProfileInfoScreen";
 
 const SongDetailScreen = ({ navigation, route }) => {
   const [newSong, setNewSong] = useState({});
@@ -70,7 +66,6 @@ const SongDetailScreen = ({ navigation, route }) => {
     });
 
     setNewSongs(newSongsTemp);
-    console.log(newSongsTemp);
   };
 
   const handleConfirm = () => {
@@ -97,14 +92,14 @@ const SongDetailScreen = ({ navigation, route }) => {
             rating={newSong.rating}
             onChange={(e) => setRating(newSong, e)}
           />
+          <TouchableOpacity onPress={handleConfirm} style={styles.button}>
+            <Text style={styles.buttonText}>Potvdiť</Text>
+          </TouchableOpacity>
         </View>
       </View>
       <View style={styles.buttonDetailContainer}>
-        <TouchableOpacity onPress={handleConfirm} style={styles.button}>
-          <Text style={styles.buttonText}>Confirm</Text>
-        </TouchableOpacity>
         <TouchableOpacity onPress={handleChangeSong} style={styles.button}>
-          <Text style={styles.buttonText}>Change song</Text>
+          <Text style={styles.buttonText}>Zmeniť pieseň</Text>
         </TouchableOpacity>
       </View>
     </KeyboardAvoidingView>

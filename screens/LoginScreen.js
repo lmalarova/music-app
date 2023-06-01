@@ -1,22 +1,17 @@
 import {
   KeyboardAvoidingView,
-  StyleSheet,
   Text,
   TextInput,
   TouchableOpacity,
   View,
 } from "react-native";
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { auth } from "../firebase";
-import { writeUserData } from "../firebase";
-import { useNavigation } from "@react-navigation/core";
 import { styles } from "../styles/styles";
 
-const LoginScreen = () => {
+const LoginScreen = ({ navigation }) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-
-  const navigation = useNavigation();
 
   const handleLogin = () => {
     auth
@@ -24,12 +19,13 @@ const LoginScreen = () => {
       .then((userCredentials) => {
         const user = userCredentials.user;
         console.log("Logged in with: ", user.email);
-        navigation.navigate("Home");
+        navigation.push("RecommendedSongsScreen");
       })
       .catch((error) => alert(error.message));
   };
   return (
     <KeyboardAvoidingView style={styles.container} behavior="padding">
+      <Text style={styles.title}>Music-App</Text>
       <View style={styles.inputContainer}>
         <TextInput
           placeholder="Email"
@@ -38,7 +34,7 @@ const LoginScreen = () => {
           style={styles.input}
         />
         <TextInput
-          placeholder="Password"
+          placeholder="Heslo"
           value={password}
           onChangeText={(text) => {
             setPassword(text);
@@ -50,7 +46,11 @@ const LoginScreen = () => {
 
       <View style={styles.buttonContainer}>
         <TouchableOpacity onPress={handleLogin} style={styles.button}>
-          <Text style={styles.buttonText}>Login</Text>
+          <Text style={styles.buttonText}>Prihlásiť sa</Text>
+        </TouchableOpacity>
+        <Text style={styles.text}>Nemáte konto?</Text>
+        <TouchableOpacity onPress={() => navigation.push("SignUp")}>
+          <Text style={styles.linkText}>Registrovať sa</Text>
         </TouchableOpacity>
       </View>
     </KeyboardAvoidingView>

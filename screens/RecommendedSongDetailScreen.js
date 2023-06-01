@@ -12,20 +12,12 @@ import { recommendSongs } from "../logic/recommendSongs";
 
 const RecommendedSongDetailScreen = ({ navigation, route }) => {
   const [song, setSong] = useState({});
-  const [counter, setCounter] = useState(0);
-
   const getSong = async () => {
     setSong(route.params["song"]);
-    setCounter(route.params["counterValue"]);
-    console.log("DETAIL");
-    console.log(counter);
-    if (route.params["counterValue"] == undefined) {
-      setCounter(0);
-    }
   };
 
   const runCode = async () => {
-    console.log("startcode at " + new Date());
+    console.log("RECOMMENDING");
     // Put your code that you want to run every hour here
     let currentUser = await firebase.auth().currentUser;
     let user;
@@ -61,8 +53,6 @@ const RecommendedSongDetailScreen = ({ navigation, route }) => {
       .update({
         recommendedSongs: recommendedSongs,
       });
-    console.log("Code executed" + new Date());
-    setCounter(0);
   };
 
   const setRating = async (songTemp, rating) => {
@@ -82,18 +72,12 @@ const RecommendedSongDetailScreen = ({ navigation, route }) => {
 
     // get his recommended songs
     const songIds = user.recommendedSongs;
-    console.log("BEFORE DELETION");
-    console.log(songIds);
 
     if (song.rating != 0) {
       for (let i = 0; i < songIds.length; i++) {
         if (songIds[i] == song.id - 1) {
-          console.log("BEFOR");
-          console.log(counter);
-          setCounter((prevCounter) => prevCounter + 1);
           songIds.splice(i, 1);
-          console.log("AFTER");
-          console.log(counter);
+          if ((songIds.length = 7)) runCode();
 
           // update song rating in ratings matrix
           firebase
@@ -116,23 +100,15 @@ const RecommendedSongDetailScreen = ({ navigation, route }) => {
       }
     }
 
-    console.log("AFTER DELETION");
-    console.log(songIds);
-
-    navigation.push("RecommendedSongsScreen", {
-      counterValue: counter,
-    });
+    navigation.push("RecommendedSongsScreen");
   };
 
   const handleBack = async () => {
-    navigation.push("RecommendedSongsScreen", {
-      counterValue: counter,
-    });
+    navigation.push("RecommendedSongsScreen");
   };
 
   useEffect(() => {
     getSong();
-    if (counter >= 3) runCode();
   }, []);
 
   return (
@@ -149,14 +125,14 @@ const RecommendedSongDetailScreen = ({ navigation, route }) => {
             rating={song.rating}
             onChange={(e) => setRating(song, e)}
           />
+          <TouchableOpacity onPress={handleConfirm} style={styles.button}>
+            <Text style={styles.buttonText}>Potvrdiť</Text>
+          </TouchableOpacity>
         </View>
       </View>
       <View style={styles.buttonDetailContainer}>
         <TouchableOpacity onPress={handleBack} style={styles.button}>
-          <Text style={styles.buttonText}>Go Back</Text>
-        </TouchableOpacity>
-        <TouchableOpacity onPress={handleConfirm} style={styles.button}>
-          <Text style={styles.buttonText}>Confirm</Text>
+          <Text style={styles.buttonText}>Späť</Text>
         </TouchableOpacity>
       </View>
     </KeyboardAvoidingView>

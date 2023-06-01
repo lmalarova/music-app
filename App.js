@@ -2,7 +2,6 @@ import { StyleSheet } from "react-native";
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import LoginScreen from "./screens/LoginScreen";
-import HomeScreen from "./screens/HomeScreen";
 import SignUpScreen from "./screens/SignUpScreen";
 import InitialProfileInfoScreen from "./screens/InitialProfileInfoScreen";
 import InitialSongsRateScreen from "./screens/InitialSongsRateScreen";
@@ -18,7 +17,6 @@ const Stack = createNativeStackNavigator();
 
 const runCode = async () => {
   console.log("startcode at " + new Date());
-  // Put your code that you want to run every hour here
   let currentUser = await firebase.auth().currentUser;
   let user;
   user = await firebase
@@ -105,11 +103,6 @@ export default function App() {
           options={{ headerShown: false }}
           name="Login"
           component={LoginScreen}
-        />
-        <Stack.Screen
-          options={{ headerShown: false }}
-          name="Home"
-          component={HomeScreen}
         />
         <Stack.Screen
           options={{ headerShown: false }}

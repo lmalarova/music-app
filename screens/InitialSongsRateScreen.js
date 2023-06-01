@@ -122,7 +122,6 @@ const InitialSongsRateScreen = ({ navigation, route }) => {
       emptyState();
     } catch (error) {
       console.log(error);
-      // Handle error
     }
   };
 
@@ -138,11 +137,11 @@ const InitialSongsRateScreen = ({ navigation, route }) => {
     <SafeAreaView style={styles.container} behavior="padding">
       <ScrollView>
         <Text style={styles.initialHeader}>
-          Tell us what you think about these songs!
+          Povedz čo si myslíš o týchto pesničkách!
         </Text>
         <View style={styles.buttonContainer}>
           <TouchableOpacity onPress={handleConfirm} style={styles.button}>
-            <Text style={styles.buttonText}>Confirm</Text>
+            <Text style={styles.buttonText}>Potvrdiť</Text>
           </TouchableOpacity>
         </View>
         <View style={styles.songContainer}>
