@@ -137,7 +137,7 @@ const InitialSongsRateScreen = ({ navigation, route }) => {
     <SafeAreaView style={styles.container} behavior="padding">
       <ScrollView>
         <Text style={styles.initialHeader}>
-          Povedz čo si myslíš o týchto pesničkách!
+          Povedzte nám čo si myslíte o týchto pesničkách!
         </Text>
         <View style={styles.buttonContainer}>
           <TouchableOpacity onPress={handleConfirm} style={styles.button}>

@@ -63,7 +63,7 @@ const RatedSongsScreen = ({ navigation, route }) => {
         <Text style={styles.headerText}>Odporúčané pesničky</Text>
       </View>
       <ScrollView>
-        <Text style={styles.initialHeader}>Tvoje ohodnotené pesničky!</Text>
+        <Text style={styles.initialHeader}>Vaše ohodnotené pesničky!</Text>
         <View style={styles.songContainer}>
           {!!songs.length &&
             songs.map((elem) => (

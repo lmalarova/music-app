@@ -33,16 +33,18 @@ const RecommendedSongsScreen = ({ route, navigation }) => {
     setSongs([]);
     let songsTemp = [];
 
-    for (let i = 0; i < songIds.length; i++) {
-      const snapshot = await firebase
-        .database()
-        .ref("/songs/" + songIds[i])
-        .once("value");
-      let songTemp = snapshot.val();
-      songTemp.rating = 0;
-      songsTemp.push(songTemp);
+    if (songIds != undefined) {
+      for (let i = 0; i < songIds.length; i++) {
+        const snapshot = await firebase
+          .database()
+          .ref("/songs/" + songIds[i])
+          .once("value");
+        let songTemp = snapshot.val();
+        songTemp.rating = 0;
+        songsTemp.push(songTemp);
+      }
+      setSongs((arr) => [...arr, ...songsTemp]);
     }
-    setSongs((arr) => [...arr, ...songsTemp]);
   };
 
   const handleDetail = async (song) => {
@@ -53,6 +55,10 @@ const RecommendedSongsScreen = ({ route, navigation }) => {
 
   const handleNavigation = async () => {
     navigation.push("RatedSongsScreen");
+  };
+
+  const handleReload = async () => {
+    navigation.push("RecommendedSongsScreen");
   };
 
   useEffect(() => {
@@ -67,10 +73,10 @@ const RecommendedSongsScreen = ({ route, navigation }) => {
         </TouchableOpacity>
         <NavigationArrow onPress={handleNavigation} />
       </View>
-      <Text style={styles.initialHeader}>Tvoje odporúčané pesničky!</Text>
+      <Text style={styles.initialHeader}>Vaše odporúčané pesničky!</Text>
       <ScrollView>
         <View style={styles.songContainer}>
-          {!!songs.length &&
+          {songs.length ? (
             songs.map((elem, index) => (
               <TouchableOpacity
                 onPress={() => {
@@ -83,7 +89,20 @@ const RecommendedSongsScreen = ({ route, navigation }) => {
                   <Text style={styles.songName}>{elem.name}</Text>
                 </View>
               </TouchableOpacity>
-            ))}
+            ))
+          ) : (
+            <View>
+              <Text>
+                Generujem odporúčania. Bude to chvíľu trvať. Na zobrazenie
+                nových odporúčaní je potrebné obnoviť stránku.
+              </Text>
+              <View style={styles.buttonDetailContainer}>
+                <TouchableOpacity onPress={handleReload} style={styles.button}>
+                  <Text style={styles.buttonText}>Obnoviť</Text>
+                </TouchableOpacity>
+              </View>
+            </View>
+          )}
         </View>
       </ScrollView>
     </SafeAreaView>

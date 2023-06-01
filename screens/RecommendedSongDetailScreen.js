@@ -77,7 +77,9 @@ const RecommendedSongDetailScreen = ({ navigation, route }) => {
       for (let i = 0; i < songIds.length; i++) {
         if (songIds[i] == song.id - 1) {
           songIds.splice(i, 1);
-          if ((songIds.length = 7)) runCode();
+          if (songIds.length == 0) {
+            runCode();
+          }
 
           // update song rating in ratings matrix
           firebase

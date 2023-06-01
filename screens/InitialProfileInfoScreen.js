@@ -57,7 +57,7 @@ const InitialProfileInfoScreen = ({ navigation }) => {
 
   return (
     <KeyboardAvoidingView style={styles.initialContainer} behavior="padding">
-      <Text style={styles.initialHeader}>Povedz nám niečo o sebe!</Text>
+      <Text style={styles.initialHeader}>Povedzte nám niečo o sebe!</Text>
       <View style={styles.inputContainer}>
         <Text style={styles.birthDateLabel}>Dátum narodenia</Text>
         <DateTimePicker
